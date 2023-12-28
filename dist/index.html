@@ -19,14 +19,20 @@
     </style>
 </head>
 <body>
-    <div class="flex flex-col lg:flex-row justify-center items-center w-screen h-screen wallpaper">
+    <div class="flex flex-col lg:flex-row justify-center items-center w-screen h-screen wallpaper relative">
+        <!-- modal -->
+        <div id="box-modal" class="flex justify-center items-center gap-2 w-auto h-10 rounded-lg shadow text-white text-base p-2 absolute right-96 top-24 bg-red-500 hidden">
+            <span id="text-modal">
+                
+            </span>
+        </div>
         <section class="flex flex-col justify-center items-center gap-3.5 w-96 h-auto p-4 bg-background rounded-lg shadow">
             <div class="flex justify-center items-center w-full p-2">
                 <h1 id="title-principal" class="text-2xl text-white">
                     Faça login
                 </h1>
             </div>
-            <form id="form" class="flex flex-col justify-center items-center gap-4 w-full p-2 text-base text-white">
+            <form id="form" action="post" class="flex flex-col justify-center items-center gap-4 w-full p-2 text-base text-white">
                 <!-- input de nome -->
                 <div id="box-nome" class="flex flex-col justify-center items-center gap-2 w-10/12 hidden">
                     <label for="nome" class="w-full">Nome</label>
@@ -43,7 +49,7 @@
                     <input type="password" name="senha" id="senha" class="w-full h-12 border-0 outline-0 bg-black rounded-lg p-2 pl-4 text-white shadow" placeholder="Insira sua senha">
                 </div>
 
-                <a id="conta-senha" href="" target="_blank" class="hover:underline p-2">
+                <a id="ancora-senha" href="" target="_blank" class="hover:underline p-2">
                     Esqueceu a senha?
                 </a>
 

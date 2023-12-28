@@ -5,9 +5,25 @@ const btn = document.getElementById('btn-entrar') as HTMLButtonElement
 const boxNome = document.getElementById('box-nome') as HTMLDivElement 
 const form = document.getElementById('form') as HTMLFormElement 
 
+// Show modal
+function ShowModal(text: string, bg: string) {
+    const boxModal = document.getElementById('box-modal') as HTMLDivElement 
+    const content = document.getElementById('text-modal') as HTMLSpanElement
+
+    boxModal.classList.remove('hidden')
+    boxModal.classList.add(`${bg}`)
+    content.textContent = text
+
+    setTimeout(() => {
+        boxModal.classList.add('hidden')
+        boxModal.classList.remove(`${bg}`)
+        content.textContent = ''
+    }, 2000)
+}
+
 // Altera o formulário entre Login e novo usuário
 function AlterForm (isLogin: boolean) {
-    if(isLogin) {                           // Login
+    if(!isLogin) {                           // Login
         ancora.classList.add('hidden')
         ancoraEsq.classList.add('hidden')
         boxNome.classList.remove('hidden')
@@ -25,7 +41,7 @@ function AlterForm (isLogin: boolean) {
 
 // Evento de âncora: Mudar formulário para criar ou logar
 ancora.addEventListener("click", () => {
-    AlterForm(true)
+    AlterForm(false)
 })
 
 // Requisição para pegar login
@@ -74,19 +90,19 @@ form.addEventListener("submit", async (e:Event) => {
     if (user.nome == '' || user.nome == null) {
         try {
             if(user.email == '' || user.senha == '') {
-                console.log('Preencha os campos')  
+                ShowModal('Preencha os campos', 'bg-red-800') 
             } else {
                 const userJson: Usuario = await GetUsers(user.email)
                 
                 if(userJson.senha == null || user.senha === '') {
-                    // modal aqui
-                    console.log('Usuário Inexistente')
+                    ShowModal('Usuário Inexistente', 'bg-red-800')
                 } else {
                     if(userJson.senha === user.senha) {
                         // Modal de login de sucesso aqui
-                        console.log('Login com SUCESSO!')
+                        ShowModal('Login com SUCESSO!', 'bg-lime-600')
+                        window.location.href = '/home.html'
                     } else {
-                        console.log('Senha incorreta')
+                        ShowModal('Senha incorreta!', 'bg-red-800')
                     }   
                 }
             }
@@ -97,14 +113,19 @@ form.addEventListener("submit", async (e:Event) => {
         // Nova conta
         try {
             if(user.email == '' || user.senha == '') {  // verificar se os campos estão vazios
-                console.log('Preencha os campos')
-                
+                ShowModal('Preencha os campos', 'bg-red-800') 
             } else {
                 const userJson2: Usuario = await GetUsers(user.email)  // verificar se o user já existe
-                if(Object.keys(userJson2).length !== 0) {
-                    console.log('Usuario existente');
+                if(userJson2.email !== '') {
+                    ShowModal('Usuário existente!', 'bg-red-800') 
                 } else {
-                    console.log(AddUsers(user))
+                    const res: object = await AddUsers(user)
+                    if(res) {
+                        ShowModal('Criado com SUCESSO!', 'bg-lime-600') 
+                        AlterForm(true)
+                    } else {
+                        ShowModal('Erro ao criar usuário', 'bg-red-800') 
+                    }
                 }
             }
         }

@@ -14,9 +14,22 @@ const ancoraEsq = document.getElementById('ancora-senha');
 const btn = document.getElementById('btn-entrar');
 const boxNome = document.getElementById('box-nome');
 const form = document.getElementById('form');
+// Show modal
+function ShowModal(text, bg) {
+    const boxModal = document.getElementById('box-modal');
+    const content = document.getElementById('text-modal');
+    boxModal.classList.remove('hidden');
+    boxModal.classList.add(`${bg}`);
+    content.textContent = text;
+    setTimeout(() => {
+        boxModal.classList.add('hidden');
+        boxModal.classList.remove(`${bg}`);
+        content.textContent = '';
+    }, 2000);
+}
 // Altera o formulário entre Login e novo usuário
 function AlterForm(isLogin) {
-    if (isLogin) { // Login
+    if (!isLogin) { // Login
         ancora.classList.add('hidden');
         ancoraEsq.classList.add('hidden');
         boxNome.classList.remove('hidden');
@@ -34,11 +47,11 @@ function AlterForm(isLogin) {
 }
 // Evento de âncora: Mudar formulário para criar ou logar
 ancora.addEventListener("click", () => {
-    AlterForm(true);
+    AlterForm(false);
 });
 function GetUsers(email) {
     return __awaiter(this, void 0, void 0, function* () {
-        const req = yield fetch('http://localhost:3000/user');
+        const req = yield fetch('http://localhost:3000/users');
         const res = yield req.json();
         let user = res.find(user => user.email == email);
         if (!user) {
@@ -50,7 +63,7 @@ function GetUsers(email) {
 // Requisiçãp para add usuários
 function AddUsers(data) {
     return __awaiter(this, void 0, void 0, function* () {
-        const req = yield fetch('http://localhost:3000/user', {
+        const req = yield fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -74,21 +87,21 @@ form.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, functio
     if (user.nome == '' || user.nome == null) {
         try {
             if (user.email == '' || user.senha == '') {
-                console.log('Preencha os campos');
+                ShowModal('Preencha os campos', 'bg-red-800');
             }
             else {
                 const userJson = yield GetUsers(user.email);
                 if (userJson.senha == null || user.senha === '') {
-                    // modal aqui
-                    console.log('Usuário Inexistente');
+                    ShowModal('Usuário Inexistente', 'bg-red-800');
                 }
                 else {
                     if (userJson.senha === user.senha) {
                         // Modal de login de sucesso aqui
-                        console.log('Login com SUCESSO!');
+                        ShowModal('Login com SUCESSO!', 'bg-lime-600');
+                        window.open('');
                     }
                     else {
-                        console.log('Senha incorreta');
+                        ShowModal('Senha incorreta!', 'bg-red-800');
                     }
                 }
             }
@@ -101,15 +114,22 @@ form.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, functio
         // Nova conta
         try {
             if (user.email == '' || user.senha == '') { // verificar se os campos estão vazios
-                console.log('Preencha os campos');
+                ShowModal('Preencha os campos', 'bg-red-800');
             }
             else {
                 const userJson2 = yield GetUsers(user.email); // verificar se o user já existe
-                if (Object.keys(userJson2).length !== 0) {
-                    console.log('Usuario existente');
+                if (userJson2.email !== '') {
+                    ShowModal('Usuário existente!', 'bg-red-800');
                 }
                 else {
-                    console.log(AddUsers(user));
+                    const res = yield AddUsers(user);
+                    if (res) {
+                        ShowModal('Criado com SUCESSO!', 'bg-lime-600');
+                        AlterForm(true);
+                    }
+                    else {
+                        ShowModal('Erro ao criar usuário', 'bg-red-800');
+                    }
                 }
             }
         }

@@ -1,10 +1,16 @@
 {
-    "users" : [
-        {
-            "id" : 1,
-            "nome" : "Felipe",
-            "email" : "silvahlipe@gmail.com",
-            "senha" : "nara1503"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "nome": "Felipe",
+      "email": "silvahlipe@gmail.com",
+      "senha": "nara1503"
+    },
+    {
+      "nome": "Felipe",
+      "email": "franca@gmail.com",
+      "senha": "1503",
+      "id": 2
+    }
+  ]
 }
