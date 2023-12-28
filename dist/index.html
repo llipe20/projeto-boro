@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/main.js" defer></script>
+    <link href="output.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-brands/css/uicons-brands.css'>
+    <title>Teste de type-script</title>
+    <style>
+        .bg {
+            background-image: linear-gradient(to right,#8134AF, #E4405F, #FDB813);
+        }
+
+        .wallpaper {
+            background-image: url('../public/background.jpg'); 
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex flex-col lg:flex-row justify-center items-center w-screen h-screen wallpaper">
+        <section class="flex flex-col justify-center items-center gap-3.5 w-96 h-auto p-4 bg-background rounded-lg shadow">
+            <div class="flex justify-center items-center w-full p-2">
+                <h1 id="title-principal" class="text-2xl text-white">
+                    Faça login
+                </h1>
+            </div>
+            <form id="form" class="flex flex-col justify-center items-center gap-4 w-full p-2 text-base text-white">
+                <!-- input de nome -->
+                <div id="box-nome" class="flex flex-col justify-center items-center gap-2 w-10/12 hidden">
+                    <label for="nome" class="w-full">Nome</label>
+                    <input type="text" name="nome" id="nome" class="w-full h-12 border-0 outline-0 bg-black rounded-lg p-2 pl-4 text-white shadow" placeholder="Insira seu nome">
+                </div>
+                <!-- input de email -->
+                <div class="flex flex-col justify-center items-center gap-2 w-10/12">
+                    <label for="email" class="w-full">Email</label>
+                    <input type="email" name="email" id="email" class="w-full h-12 border-0 outline-0 bg-black rounded-lg p-2 pl-4 text-white shadow" placeholder="Insira seu e-mail">
+                </div>
+                <!-- input de senha -->
+                <div class="flex flex-col justify-center items-center gap-2 w-10/12">
+                    <label for="senha" class="w-full">Senha</label>
+                    <input type="password" name="senha" id="senha" class="w-full h-12 border-0 outline-0 bg-black rounded-lg p-2 pl-4 text-white shadow" placeholder="Insira sua senha">
+                </div>
+
+                <a id="conta-senha" href="" target="_blank" class="hover:underline p-2">
+                    Esqueceu a senha?
+                </a>
+
+                <!-- input submit -->
+                <div class="flex flex-col justify-center items-center gap-2 w-10/12">
+                    <input type="submit" id="btn-entrar" class="w-full h-12 border-0 outline-0 bg rounded-lg p-2 pl-4 text-white shadow scale-95 hover:scale-100" value="Entrar">
+                </div>
+
+                <a id="ancora-conta" class="hover:underline pt-2">
+                    Criar conta
+                </a>
+            </form>
+            <ul class="flex justify-center items-center gap-2.5 w-full p-2 text-base text-white">
+                <li>
+                    <a href="https://instagram.com/___llpe">
+                        <i class="fi fi-brands-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fi fi-brands-github"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fi fi-brands-linkedin"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fi fi-brands-facebook"></i>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>
